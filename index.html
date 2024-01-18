@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APIテスト</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1> APIデモ</h1>
+        <div>
+            <div>
+                <label for="email">メールアドレス:</label>
+                <input type="text" v-model="email">
+            </div>
+            <div>
+                <label for="password">パスワード:</label>
+                <input type="text" v-model="password">
+            </div>
+            <button @click="postData">ログイン</button>
+
+        </div>
+
+        <div>
+            <button @click="userData">ユーザ情報</button>
+        </div>
+
+        <div>
+            <button @click="sendResetLink">リセットリンク送信</button>
+        </div>
+
+        <div v-if="apiResponse">
+            <h2>レスポンス:</h2>
+            <pre>{{ apiResponse }}</pre>
+        </div>
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            apiResponse: null,
+            email: 'api-test@gmail.com',
+            password: '',
+        },
+        methods: {
+            postData: function () {
+                // this.apiResponse = null;
+                axios.post('http://local.go2senkyo.com/api/login', {
+                    email: this.email,
+                    password: this.password,
+                })
+                    .then(response => {
+                        this.apiResponse = response.data;
+                        // レスポンスからトークンを取得してローカルストレージに保存
+                        localStorage.setItem('authToken', response.data.token);
+                    })
+                    .catch(error => {
+                        this.apiResponse = error;
+                        console.error('POST エラー:', error);
+                    });
+            },
+
+            userData: function () {
+                this.apiResponse = null;
+                // ローカルストレージからトークンを取得
+                const token = localStorage.getItem('authToken');
+                axios.get('http://local.go2senkyo.com/api/user', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                    .then(response => {
+                        this.apiResponse = response.data;
+                    })
+                    .catch(error => {
+                        this.apiResponse = error;
+                        console.error('GET エラー:', error);
+                    });
+            },
+
+            sendResetLink: function () {
+                // this.apiResponse = null;
+                axios.post('http://local.go2senkyo.com/api/password-reset', {
+                    email: this.email,
+                })
+                    .then(response => {
+                        this.apiResponse = response.data;
+                    })
+                    .catch(error => {
+                        this.apiResponse = error;
+                        console.error('POST エラー:', error);
+                    });
+            },
+
+        }
+    });
+</script>
+
+</html>
