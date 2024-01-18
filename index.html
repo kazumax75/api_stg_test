@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APIƒeƒXƒg</title>
+    <title>APIãƒ†ã‚¹ãƒˆ</title>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -12,30 +12,30 @@
 
 <body>
     <div id="app">
-        <h1> APIƒfƒ‚</h1>
+        <h1> APIãƒ‡ãƒ¢</h1>
         <div>
             <div>
-                <label for="email">ƒ[ƒ‹ƒAƒhƒŒƒX:</label>
+                <label for="email">ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹:</label>
                 <input type="text" v-model="email">
             </div>
             <div>
-                <label for="password">ƒpƒXƒ[ƒh:</label>
+                <label for="password">ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰:</label>
                 <input type="text" v-model="password">
             </div>
-            <button @click="postData">ƒƒOƒCƒ“</button>
+            <button @click="postData">ãƒ­ã‚°ã‚¤ãƒ³</button>
 
         </div>
 
         <div>
-            <button @click="userData">ƒ†[ƒUî•ñ</button>
+            <button @click="userData">ãƒ¦ãƒ¼ã‚¶æƒ…å ±</button>
         </div>
 
         <div>
-            <button @click="sendResetLink">ƒŠƒZƒbƒgƒŠƒ“ƒN‘—M</button>
+            <button @click="sendResetLink">ãƒªã‚»ãƒƒãƒˆãƒªãƒ³ã‚¯é€ä¿¡</button>
         </div>
 
         <div v-if="apiResponse">
-            <h2>ƒŒƒXƒ|ƒ“ƒX:</h2>
+            <h2>ãƒ¬ã‚¹ãƒãƒ³ã‚¹:</h2>
             <pre>{{ apiResponse }}</pre>
         </div>
     </div>
@@ -58,18 +58,18 @@
                 })
                     .then(response => {
                         this.apiResponse = response.data;
-                        // ƒŒƒXƒ|ƒ“ƒX‚©‚çƒg[ƒNƒ“‚ðŽæ“¾‚µ‚Äƒ[ƒJƒ‹ƒXƒgƒŒ[ƒW‚É•Û‘¶
+                        // ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‹ã‚‰ãƒˆãƒ¼ã‚¯ãƒ³ã‚’å–å¾—ã—ã¦ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ãƒˆãƒ¬ãƒ¼ã‚¸ã«ä¿å­˜
                         localStorage.setItem('authToken', response.data.token);
                     })
                     .catch(error => {
                         this.apiResponse = error;
-                        console.error('POST ƒGƒ‰[:', error);
+                        console.error('POST ã‚¨ãƒ©ãƒ¼:', error);
                     });
             },
 
             userData: function () {
                 this.apiResponse = null;
-                // ƒ[ƒJƒ‹ƒXƒgƒŒ[ƒW‚©‚çƒg[ƒNƒ“‚ðŽæ“¾
+                // ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ãƒˆãƒ¬ãƒ¼ã‚¸ã‹ã‚‰ãƒˆãƒ¼ã‚¯ãƒ³ã‚’å–å¾—
                 const token = localStorage.getItem('authToken');
                 axios.get('http://local.go2senkyo.com/api/user', {
                     headers: {
@@ -81,7 +81,7 @@
                     })
                     .catch(error => {
                         this.apiResponse = error;
-                        console.error('GET ƒGƒ‰[:', error);
+                        console.error('GET ã‚¨ãƒ©ãƒ¼:', error);
                     });
             },
 
@@ -95,7 +95,7 @@
                     })
                     .catch(error => {
                         this.apiResponse = error;
-                        console.error('POST ƒGƒ‰[:', error);
+                        console.error('POST ã‚¨ãƒ©ãƒ¼:', error);
                     });
             },
 
